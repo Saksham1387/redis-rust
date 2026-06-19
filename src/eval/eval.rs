@@ -1,5 +1,5 @@
-use std::io::{self, Write};
 use crate::cmd::Cmd;
+use std::io::{self, Write};
 
 fn encode(value: &str, is_simple: bool) -> Vec<u8> {
     if is_simple {
@@ -11,8 +11,7 @@ fn encode(value: &str, is_simple: bool) -> Vec<u8> {
     }
 }
 
-fn eval_ping<W: Write>(args: Vec<String>, writer: &mut W) -> io::Result<()>{
-    
+fn eval_ping<W: Write>(args: Vec<String>, writer: &mut W) -> io::Result<()> {
     if args.len() >= 2 {
         writer.write_all(b"-ERR wrong number of arguments for 'ping' command\r\n")?;
     }
@@ -31,14 +30,14 @@ fn eval_ping<W: Write>(args: Vec<String>, writer: &mut W) -> io::Result<()>{
 
 pub fn evaluate<W: Write>(cmd: Cmd, writer: &mut W) -> std::io::Result<()> {
     match cmd.cmd.as_str() {
-        "PING" =>{ 
+        "PING" => {
             eval_ping(cmd.args, writer)?;
-        },
+        }
 
         _ => {
             let err_msg = format!("-ERR unknown command '{}'\r\n", cmd.cmd);
             writer.write_all(err_msg.as_bytes())?;
-        },
+        }
     }
 
     Ok(())
