@@ -6,4 +6,4 @@ edition = "2024"
 [dependencies]
 anyhow = "1.0.102"
 thiserror = "2.0.18"
-tokio = {version = "1.52.3",features = ["full"]}
+mio = { version = "0.8", features = ["net", "os-poll"] }
